@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'avatars_list.dart';
@@ -13,7 +16,7 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
-
+  late String email, password;
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
@@ -22,20 +25,26 @@ class _RegisterFormState extends State<RegisterForm> {
       autovalidateMode: _autoValidateMode,
       child: Column(
         children: [
-          const CustomTextFormField(
-            hintText: 'Enter your name',
-          ),
+          // const CustomTextFormField(
+          //   hintText: 'Enter your name',
+          // ),
           const SizedBox(
             height: 16,
           ),
-          const CustomTextFormField(
+          CustomTextFormField(
             hintText: 'Enter your email',
+            onSaved: (value) {
+              email = value!;
+            },
           ),
           const SizedBox(
             height: 16,
           ),
-          const CustomTextFormField(
+          CustomTextFormField(
             hintText: 'Enter your password',
+            onSaved: (value) {
+              password = value!;
+            },
           ),
           const SizedBox(
             height: 16,
@@ -45,8 +54,25 @@ class _RegisterFormState extends State<RegisterForm> {
             height: 32,
           ),
           CustomButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                try {
+                  final credential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'weak-password') {
+                    print('The password provided is too weak.');
+                  } else if (e.code == 'email-already-in-use') {
+                    print('The account already exists for that email.');
+                  }
+                } catch (e) {
+                  print(e);
+                }
+                log("registersucceded");
               } else {
                 setState(() {
                   _autoValidateMode = AutovalidateMode.always;
