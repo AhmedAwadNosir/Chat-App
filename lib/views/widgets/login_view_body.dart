@@ -9,36 +9,38 @@ class LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 60,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 32,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 60,
             ),
-            child: Image.asset(
-              'assets/images/logo.png',
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32,
+              ),
+              child: Image.asset(
+                'assets/images/logo.png',
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          const LoginForm(),
-          const SizedBox(
-            height: 32,
-          ),
-          AuthAuthenticationOption(
-            action: 'Register',
-            text: 'Don\'t have an account?',
-            onPressed: () {
-              Navigator.pushNamed(context, RegisterView.id);
-            },
-          )
-        ],
+            const SizedBox(
+              height: 32,
+            ),
+            const LoginForm(),
+            const SizedBox(
+              height: 32,
+            ),
+            AuthAuthenticationOption(
+              action: 'Register',
+              text: 'Don\'t have an account?',
+              onPressed: () {
+                Navigator.pushNamed(context, RegisterView.id);
+              },
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,10 @@
+import 'package:chat_app/cubits/login/login_cubit.dart';
+import 'package:chat_app/functions/show_snackBar.dart';
 import 'package:chat_app/views/widgets/login_view_body.dart';
+import 'package:chat_app/views/widgets/login_view_body_bloc_consumer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -8,20 +13,22 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
-                fit: BoxFit.cover),
-          ),
-          child: const SingleChildScrollView(
-            child: LoginViewBody(),
+      body: BlocProvider(
+        create: (context) => LoginCubit(),
+        child: SafeArea(
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/background.png'),
+                  fit: BoxFit.cover),
+            ),
+            child: const LoginViewBodyBlocConsumer(),
           ),
         ),
       ),
     );
   }
 }
+

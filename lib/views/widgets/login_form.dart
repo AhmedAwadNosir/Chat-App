@@ -1,7 +1,7 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/cubits/login/login_cubit.dart';
+import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'custom_button.dart';
 import 'custom_text_form_field.dart';
@@ -46,18 +46,8 @@ class _LoginFormState extends State<LoginForm> {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                try {
-                  final credential = await FirebaseAuth.instance
-                      .signInWithEmailAndPassword(
-                          email: email, password: password);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('No user found for that email.');
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password provided for that user.');
-                  }
-                }
-                log("loginSuccesed");
+                BlocProvider.of<LoginCubit>(context)
+                    .login(email: email, password: password);
               } else {
                 setState(() {
                   _autoValidateMode = AutovalidateMode.always;
