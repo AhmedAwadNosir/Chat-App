@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:chat_app/cubits/register/register_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'avatars_list.dart';
 import 'custom_button.dart';
@@ -57,22 +59,8 @@ class _RegisterFormState extends State<RegisterForm> {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                try {
-                  final credential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    print('The password provided is too weak.');
-                  } else if (e.code == 'email-already-in-use') {
-                    print('The account already exists for that email.');
-                  }
-                } catch (e) {
-                  print(e);
-                }
-                log("registersucceded");
+                BlocProvider.of<RegisterCubit>(context)
+                    .register(email: email, password: password);
               } else {
                 setState(() {
                   _autoValidateMode = AutovalidateMode.always;
