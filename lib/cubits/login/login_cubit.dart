@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/functions/fetch_user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
@@ -12,6 +12,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
+      await fetchUserData(credential);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
