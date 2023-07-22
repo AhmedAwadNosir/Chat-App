@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:chat_app/functions/store_user_data.dart';
+import 'package:chat_app/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 
@@ -7,14 +9,16 @@ part 'register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitial());
 
-  void register({required String email, required String password}) async {
+  void register(
+      {required UserModel userModel, required String password}) async {
     emit(RegisterLoding());
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
+        email: userModel.email!,
         password: password,
       );
+      storeUserData(credential, userModel);
       emit(RegisterSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

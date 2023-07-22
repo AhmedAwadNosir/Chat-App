@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:chat_app/cubits/register/register_cubit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +16,8 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormState>();
-  late String email, password;
+  late String password;
+  UserModel userModel = UserModel();
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   @override
   Widget build(BuildContext context) {
@@ -27,16 +26,19 @@ class _RegisterFormState extends State<RegisterForm> {
       autovalidateMode: _autoValidateMode,
       child: Column(
         children: [
-          // const CustomTextFormField(
-          //   hintText: 'Enter your name',
-          // ),
+           CustomTextFormField(
+            hintText: 'Enter your name',
+            onSaved: (value){
+              userModel.userName =value;
+            },
+          ),
           const SizedBox(
             height: 16,
           ),
           CustomTextFormField(
             hintText: 'Enter your email',
             onSaved: (value) {
-              email = value!;
+              userModel.email = value!;
             },
           ),
           const SizedBox(
@@ -51,7 +53,7 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(
             height: 16,
           ),
-          const AvatarListWidget(),
+           AvatarListWidget(userModel: userModel,),
           const SizedBox(
             height: 32,
           ),
@@ -60,14 +62,14 @@ class _RegisterFormState extends State<RegisterForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 BlocProvider.of<RegisterCubit>(context)
-                    .register(email: email, password: password);
+                    .register(userModel: userModel, password: password);
               } else {
                 setState(() {
                   _autoValidateMode = AutovalidateMode.always;
                 });
               }
             },
-            text: 'Login',
+            text: 'register',
           ),
         ],
       ),

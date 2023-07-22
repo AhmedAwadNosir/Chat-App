@@ -1,3 +1,4 @@
+import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'custom_avatar.dart';
 
@@ -16,8 +17,8 @@ class AvatarListWidget extends StatefulWidget {
     Color(0xffEE3A3D),
   ];
 
-  const AvatarListWidget({Key? key}) : super(key: key);
-
+  const AvatarListWidget({Key? key, required this.userModel}) : super(key: key);
+  final UserModel userModel;
   @override
   State createState() => _AvatarListWidgetState();
 }
@@ -41,6 +42,7 @@ class _AvatarListWidgetState extends State<AvatarListWidget> {
                   setState(() {
                     _selectedIndex = entry.key;
                   });
+                  widget.userModel.avatar = widget.avatarImages[_selectedIndex];
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
