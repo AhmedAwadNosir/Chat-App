@@ -3,7 +3,7 @@ import 'package:chat_app/features/chat/models/message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../functions/get_my_avatar.dart';
 
 class CreateMessageContainer extends StatefulWidget {
   const CreateMessageContainer({super.key});
@@ -100,7 +100,3 @@ OutlineInputBorder border({required Color color}) {
   );
 }
 
-Future<String> getMyAvatar() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString("avatar")!;
-}
