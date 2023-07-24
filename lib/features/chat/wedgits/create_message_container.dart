@@ -3,9 +3,29 @@ import 'package:chat_app/features/chat/models/message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CreateMessageContainer extends StatelessWidget {
+class CreateMessageContainer extends StatefulWidget {
   const CreateMessageContainer({super.key});
+
+  @override
+  State<CreateMessageContainer> createState() => _CreateMessageContainerState();
+}
+
+class _CreateMessageContainerState extends State<CreateMessageContainer> {
+  late TextEditingController textEditingController;
+  @override
+  void initState() {
+    textEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +52,7 @@ class CreateMessageContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TextField(
+                controller: textEditingController,
                 decoration: InputDecoration(
                     hintText: "Tape your message",
                     hintStyle: const TextStyle(
@@ -42,12 +63,13 @@ class CreateMessageContainer extends StatelessWidget {
                     ),
                     focusedBorder: border(color: const Color(0xff5B0DA9))),
                 onSubmitted: (value) async {
-                  sendMessage(MessageModel(
-                    content: value,
-                    avatar: "assets/images/avatar_1.png",
-                    messagetime: Timestamp.now(),
-                    senderId: FirebaseAuth.instance.currentUser!.uid,
-                  ));
+                  MessageModel messageModel = MessageModel(
+                      content: value,
+                      avatar: await getMyAvatar(),
+                      messagetime: Timestamp.now(),
+                      senderId: FirebaseAuth.instance.currentUser!.uid);
+                  sendMessage(messageModel);
+                  textEditingController.clear();
                 },
               ),
             ),
@@ -76,4 +98,9 @@ OutlineInputBorder border({required Color color}) {
       color: color,
     ),
   );
+}
+
+Future<String> getMyAvatar() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("avatar")!;
 }

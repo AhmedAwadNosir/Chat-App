@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:chat_app/features/Authintcation/functions/fetch_user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_state.dart';
 
@@ -12,7 +13,9 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
-      await fetchUserData(credential);
+      var user = await fetchUserData(credential);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("avatar", user.avatar!);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
