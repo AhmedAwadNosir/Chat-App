@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'my_messages_buble.dart';
 
 class ChatListView extends StatelessWidget {
-  const ChatListView({super.key, required this.messages});
+  const ChatListView({super.key, required this.messages, required this.scrollController});
   final List<MessageModel> messages;
+  final ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      reverse: true,
+      controller: scrollController,
       itemCount: messages.length,
       itemBuilder: (context, index) {
         var uid = FirebaseAuth.instance.currentUser!.uid;

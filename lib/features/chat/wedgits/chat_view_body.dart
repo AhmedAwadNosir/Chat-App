@@ -15,8 +15,26 @@ class ChatViwBody extends StatefulWidget {
 }
 
 class _ChatViwBodyState extends State<ChatViwBody> {
-  final Stream<QuerySnapshot> _messageStream =
-      FirebaseFirestore.instance.collection(kcolectionmessages).snapshots();
+  final Stream<QuerySnapshot> _messageStream = FirebaseFirestore.instance
+      .collection(kcolectionmessages)
+      .orderBy("messagetime", descending: true)
+      .snapshots();
+
+  late ScrollController scrollController;
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,14 +51,19 @@ class _ChatViwBodyState extends State<ChatViwBody> {
                     messages.add(MessageModel.fromjson(
                         docment.data() as Map<String, dynamic>));
                   }
-                  return ChatListView(messages: messages);
+                  return ChatListView(
+                    messages: messages,
+                    scrollController: scrollController,
+                  );
                 } else {
                   return const Text("no messages");
                 }
               },
             ),
           ),
-          const CreateMessageContainer()
+          CreateMessageContainer(
+            scrollController: scrollController,
+          )
         ],
       ),
     );

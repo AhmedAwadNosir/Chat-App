@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../functions/get_my_avatar.dart';
 
 class CreateMessageContainer extends StatefulWidget {
-  const CreateMessageContainer({super.key});
-
+  const CreateMessageContainer({super.key, required this.scrollController});
+  final ScrollController scrollController;
   @override
   State<CreateMessageContainer> createState() => _CreateMessageContainerState();
 }
@@ -69,6 +69,9 @@ class _CreateMessageContainerState extends State<CreateMessageContainer> {
                       messagetime: Timestamp.now(),
                       senderId: FirebaseAuth.instance.currentUser!.uid);
                   sendMessage(messageModel);
+                  widget.scrollController.animateTo(0.0,
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeIn);
                   textEditingController.clear();
                 },
               ),
@@ -99,4 +102,3 @@ OutlineInputBorder border({required Color color}) {
     ),
   );
 }
-
