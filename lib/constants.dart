@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const kPrimraryColor = Color(0xffFFC700);
 const kcolectionusers = "users";
+const kcolectionmessages = "messages";
 const MaterialColor kPrimarySwatch = MaterialColor(
   0xffFFC700,
   <int, Color>{

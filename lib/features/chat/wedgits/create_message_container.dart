@@ -1,11 +1,15 @@
- import 'package:flutter/material.dart';
+import 'package:chat_app/features/chat/functions/send_message.dart';
+import 'package:chat_app/features/chat/models/message_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class CreateMessageContainer extends StatelessWidget {
   const CreateMessageContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return   Container(
+    return Container(
       height: MediaQuery.of(context).size.height * 0.13,
       color: const Color(0xff1F1F1F),
       child: Padding(
@@ -38,6 +42,12 @@ class CreateMessageContainer extends StatelessWidget {
                     ),
                     focusedBorder: border(color: const Color(0xff5B0DA9))),
                 onSubmitted: (value) async {
+                  sendMessage(MessageModel(
+                    content: value,
+                    avatar: "assets/images/avatar_1.png",
+                    messagetime: Timestamp.now(),
+                    senderId: FirebaseAuth.instance.currentUser!.uid,
+                  ));
                 },
               ),
             ),
