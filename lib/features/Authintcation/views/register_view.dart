@@ -1,5 +1,5 @@
 import 'package:chat_app/cubits/register/register_cubit.dart';
-import 'package:chat_app/views/widgets/register_view_body_bloc_consumer.dart';
+import 'package:chat_app/features/Authintcation/widgets/register_view_body_bloc_consumer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 class RegisterView extends StatelessWidget {

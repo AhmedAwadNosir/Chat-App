@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../register_view.dart';
+import '../views/register_view.dart';
 import 'already_have_an_account.dart';
 import 'login_form.dart';
 

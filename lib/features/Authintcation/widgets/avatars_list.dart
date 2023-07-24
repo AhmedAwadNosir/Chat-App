@@ -1,4 +1,4 @@
-import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/features/Authintcation/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'custom_avatar.dart';
 

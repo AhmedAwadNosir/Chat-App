@@ -1,5 +1,4 @@
 import 'package:chat_app/cubits/login/login_cubit.dart';
-import 'package:chat_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,6 +47,7 @@ class _LoginFormState extends State<LoginForm> {
                 _formKey.currentState!.save();
                 BlocProvider.of<LoginCubit>(context)
                     .login(email: email, password: password);
+                
               } else {
                 setState(() {
                   _autoValidateMode = AutovalidateMode.always;

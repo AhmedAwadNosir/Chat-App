@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_app/functions/fetch_user_data.dart';
+import 'package:chat_app/features/Authintcation/functions/fetch_user_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 

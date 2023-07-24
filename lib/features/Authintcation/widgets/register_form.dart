@@ -1,5 +1,5 @@
 import 'package:chat_app/cubits/register/register_cubit.dart';
-import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/features/Authintcation/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

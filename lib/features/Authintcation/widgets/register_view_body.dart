@@ -1,4 +1,4 @@
-import 'package:chat_app/views/widgets/register_form.dart';
+import 'package:chat_app/features/Authintcation/widgets/register_form.dart';
 import 'package:flutter/material.dart';
 
 import 'already_have_an_account.dart';

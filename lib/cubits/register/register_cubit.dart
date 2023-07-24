@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_app/functions/store_user_data.dart';
-import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/features/Authintcation/functions/store_user_data.dart';
+import 'package:chat_app/features/Authintcation/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 

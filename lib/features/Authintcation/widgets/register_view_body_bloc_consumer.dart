@@ -1,10 +1,10 @@
-import 'package:chat_app/views/widgets/register_view_body.dart';
+import 'package:chat_app/features/Authintcation/widgets/register_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../../cubits/register/register_cubit.dart';
-import '../../functions/show_snackBar.dart';
+import '../../../cubits/register/register_cubit.dart';
+import '../functions/show_snackBar.dart';
 
 class RegisterViewBodyBlocConsumer extends StatelessWidget {
   const RegisterViewBodyBlocConsumer({

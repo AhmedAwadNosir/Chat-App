@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../../cubits/login/login_cubit.dart';
-import '../../functions/show_snackBar.dart';
+import '../../../cubits/login/login_cubit.dart';
+import '../functions/show_snackBar.dart';
+import '../../chat/views/chat_view.dart';
 import 'login_view_body.dart';
 
 class LoginViewBodyBlocConsumer extends StatelessWidget {
@@ -19,7 +20,7 @@ class LoginViewBodyBlocConsumer extends StatelessWidget {
           showSnackBar(context, message: state.errormessage);
         }
         if (state is LoginSuccess) {
-          showSnackBar(context, message: "login complete");
+          Navigator.pushNamed(context, ChatView.id);
         }
       },
       builder: (context, state) {
