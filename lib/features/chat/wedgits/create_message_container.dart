@@ -29,6 +29,7 @@ class _CreateMessageContainerState extends State<CreateMessageContainer> {
 
   @override
   Widget build(BuildContext context) {
+    late String content;
     return Container(
       height: MediaQuery.of(context).size.height * 0.13,
       color: const Color(0xff1F1F1F),
@@ -62,24 +63,20 @@ class _CreateMessageContainerState extends State<CreateMessageContainer> {
                       color: const Color(0xff252525),
                     ),
                     focusedBorder: border(color: const Color(0xff5B0DA9))),
+                onChanged: (value) {
+                  content = value;
+                },
                 onSubmitted: (value) async {
-                  MessageModel messageModel = MessageModel(
-                      content: value,
-                      avatar: await getMyAvatar(),
-                      messagetime: Timestamp.now(),
-                      senderId: FirebaseAuth.instance.currentUser!.uid);
-                  sendMessage(messageModel);
-                  widget.scrollController.animateTo(0.0,
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.easeIn);
-                  textEditingController.clear();
+                  await onSubmitted(value);
                 },
               ),
             ),
             Transform.rotate(
               angle: -45 / 70, // Rotate the icon by 45 degrees
               child: IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await onSubmitted(content);
+                },
                 icon: const Icon(
                   Icons.send,
                   size: 40,
@@ -91,6 +88,18 @@ class _CreateMessageContainerState extends State<CreateMessageContainer> {
         ),
       ),
     );
+  }
+
+  Future<void> onSubmitted(String value) async {
+    MessageModel messageModel = MessageModel(
+        content: value,
+        avatar: await getMyAvatar(),
+        messagetime: Timestamp.now(),
+        senderId: FirebaseAuth.instance.currentUser!.uid);
+    sendMessage(messageModel);
+    widget.scrollController.animateTo(0.0,
+        duration: const Duration(seconds: 1), curve: Curves.easeIn);
+    textEditingController.clear();
   }
 }
 

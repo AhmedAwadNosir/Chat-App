@@ -1,3 +1,4 @@
+import 'package:chat_app/features/chat/functions/get_my_avatar.dart';
 import 'package:chat_app/features/chat/wedgits/user_custom_avatar.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +21,21 @@ class UserInformatinContainer extends StatelessWidget {
           children: [
             Row(
               children: [
-                const UserCustomAvatar(
-                  avatar: 'assets/images/avatar_3.png',
-                  hieght: 75,
-                  width: 75,
+                FutureBuilder(
+                  future: getMyAvatar(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return UserCustomAvatar(
+                        avatar: snapshot.data!,
+                        hieght: 75,
+                        width: 75,
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
